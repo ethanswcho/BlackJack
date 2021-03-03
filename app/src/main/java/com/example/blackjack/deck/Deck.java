@@ -31,7 +31,7 @@ public class Deck {
     }
 
     // Get a card from the deck
-    public Card deal(){
+    public Card getACard(){
         cardPointer ++;
         return cards.get(cardPointer);
     }

@@ -1,5 +1,8 @@
 package com.example.blackjack.deck;
 
+import android.content.res.Resources;
+import android.widget.ImageView;
+
 public class Card {
 
     public enum Suit {Spade, Club, Heart, Diamond}
@@ -29,8 +32,13 @@ public class Card {
     }
 
     // Get a string that appended Name + Suit of the card - used to find image files of the card
-    public String getImageName(){
+    private String getImageName(){
         return this.name.name() + this.suit.name();
+    }
+
+    public ImageView getCardPhoto(){
+        Resources res = Resources.getResou
+
     }
 
     public Suit getSuit(){

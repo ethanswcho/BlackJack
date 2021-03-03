@@ -1,20 +1,38 @@
 package com.example.blackjack.game;
 
+import android.content.Context;
+import android.os.Bundle;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.blackjack.R;
 import com.example.blackjack.deck.Deck;
 import com.example.blackjack.deck.Card;
+import com.example.blackjack.players.Dealer;
+import com.example.blackjack.players.Player;
 
 import java.util.ArrayList;
 
-public class Game {
+public class Game extends AppCompatActivity {
 
     Deck deck;
 
-    int playerVal = 0;
-    int dealerVal = 0;
-    ArrayList<Card> playerCards = new ArrayList<Card>();
-    ArrayList<Card> dealerCards = new ArrayList<Card>();
+    Player player;
+    Dealer dealer;
+    private Context context;
 
-    public Game(){
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_start_game);
+        this.game = new Game(this);
+
+    }
+
+    public Game(Context c){
+        this.context=c;
+        player = new Player(10000, c);
+        dealer = new Dealer(c);
         this.getNewDeck();
     }
 
@@ -23,29 +41,17 @@ public class Game {
     }
 
     private void initialDealing(){
-        playerCards.add(deck.deal());
-        dealerCards.add(deck.deal());
-        playerCards.add(deck.deal());
+        player.deal(deck.getACard());
+        dealer.deal(deck.getACard());
+        player.deal(deck.getACard());
     }
 
-    // Deals a card to player
-    private void dealPlayer(){
-        Card c = deck.deal();
-        playerVal += c.getValue();
-        playerCards.add(c);
-    }
 
-    // Deals a card to dealer
-    private void dealDealer(){
-        Card c = deck.deal();
-        dealerVal += c.getValue();
-        dealerCards.add(c);
-    }
 
     // Gets new deck. Invoked when we have gone through more than half the deck.
     private void getNewDeck() {
         if (deck.pastHalf()) {
-            deck = new Deck();
+            this.deck = new Deck();
         }
     }
 }

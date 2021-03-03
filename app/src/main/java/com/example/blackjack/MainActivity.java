@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import com.example.blackjack.game.Game;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -17,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
 
     // Starts the game.
     public void start(View view){
-        Intent intent = new Intent(this, startGame.class);
+        Intent intent = new Intent(this, Game.class);
         startActivity(intent);
     }
 
