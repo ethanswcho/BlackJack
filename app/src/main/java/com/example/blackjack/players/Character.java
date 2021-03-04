@@ -25,6 +25,7 @@ public class Character {
 
     private LinearLayout getNewLayout(){
         LinearLayout lo = new LinearLayout(this.context);
+        lo.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
         lo.setVisibility(View.VISIBLE);
         return lo;
     }

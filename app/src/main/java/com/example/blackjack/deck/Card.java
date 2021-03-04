@@ -1,5 +1,6 @@
 package com.example.blackjack.deck;
 
+import android.content.Context;
 import android.content.res.Resources;
 import android.widget.ImageView;
 
@@ -25,12 +26,14 @@ public class Card {
     Suit suit;
     Name name;
     int value;
+    Context context;
 
     // Initialize card with given suite, name, and value that matches the name
-    public Card(Suit s, Name n){
-        suit=s;
-        name=n;
-        value=n.getValue();
+    public Card(Suit s, Name n, Context c){
+        this.suit=s;
+        this.name=n;
+        this.value=n.getValue();
+        this.context=c;
     }
 
     // Get a string that appended Name + Suit of the card - used to find image files of the card
@@ -40,10 +43,10 @@ public class Card {
 
     // Gets ImageView of the card'a name from res/drawable folder
     public ImageView getCardPhoto(){
-        Resources res = Game.context.getResources();
+        Resources res = this.context.getResources();
         String imgName = this.getImageName();
         int resID = res.getIdentifier(imgName , "drawable", "res");
-        ImageView i = new ImageView(Game.context);
+        ImageView i = new ImageView(this.context);
         i.setImageResource(resID);
         return i;
     }

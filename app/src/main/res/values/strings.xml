@@ -7,4 +7,6 @@
     <string name="button_pass">Pass</string>
     <string name="button_double">Double</string>
     <string name="button_split">Split</string>
+    <string name="layout_player">Player</string>
+    <string name="layout_dealer">dealer</string>
 </resources>

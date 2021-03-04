@@ -1,5 +1,7 @@
 package com.example.blackjack.deck;
 
+import android.content.Context;
+
 import com.example.blackjack.deck.Card;
 
 import java.util.ArrayList;
@@ -12,12 +14,14 @@ public class Deck {
     List<Card> cards = new ArrayList<>();
     //Points to current index of deck
     private int cardPointer = -1;
+    Context context;
 
     //TODO: Support multiple decks
-    public Deck(){
+    public Deck(Context context){
+        this.context=context;
         for (Card.Suit suit : Card.Suit.values()) {
             for (Card.Name name : Card.Name.values()) {
-                Card c = new Card(suit, name);
+                Card c = new Card(suit, name, context);
                 cards.add(c);
             }
         }
