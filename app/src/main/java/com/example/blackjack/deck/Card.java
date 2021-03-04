@@ -3,6 +3,8 @@ package com.example.blackjack.deck;
 import android.content.res.Resources;
 import android.widget.ImageView;
 
+import com.example.blackjack.game.Game;
+
 public class Card {
 
     public enum Suit {Spade, Club, Heart, Diamond}
@@ -33,12 +35,17 @@ public class Card {
 
     // Get a string that appended Name + Suit of the card - used to find image files of the card
     private String getImageName(){
-        return this.name.name() + this.suit.name();
+        return (this.name.name() + "_" +  this.suit.name()).toLowerCase();
     }
 
+    // Gets ImageView of the card'a name from res/drawable folder
     public ImageView getCardPhoto(){
-        Resources res = Resources.getResou
-
+        Resources res = Game.context.getResources();
+        String imgName = this.getImageName();
+        int resID = res.getIdentifier(imgName , "drawable", "res");
+        ImageView i = new ImageView(Game.context);
+        i.setImageResource(resID);
+        return i;
     }
 
     public Suit getSuit(){

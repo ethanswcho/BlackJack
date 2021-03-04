@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".startGame"
+        <activity android:name=".game.Game"
                   android:parentActivityName=".MainActivity">
         </activity>
 

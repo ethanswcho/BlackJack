@@ -13,10 +13,9 @@ public class Player extends Character{
 
     int money;
 
-
-    public Player(int m){
+    public Player(int m, Context context){
+        super(context);
         this.money = m;
-        this.cardsLayout = new LinearLayout(currentActivity)
     }
 
 
