@@ -45,7 +45,9 @@ public class Card {
     public ImageView getCardPhoto(){
         Resources res = this.context.getResources();
         String imgName = this.getImageName();
-        int resID = res.getIdentifier(imgName , "drawable", "res");
+        //int resID = res.getIdentifier(imgName , "drawable", "res");
+        int resID = res.getIdentifier(imgName , "drawable", this.context.getPackageName());
+        System.out.println(resID);
         ImageView i = new ImageView(this.context);
         i.setImageResource(resID);
         return i;

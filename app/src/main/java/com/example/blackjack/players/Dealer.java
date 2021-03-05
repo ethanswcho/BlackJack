@@ -10,8 +10,8 @@ import java.util.ArrayList;
 public class Dealer extends Character{
 
 
-    public Dealer(Context context){
-        super(context);
+    public Dealer(LinearLayout ll){
+        super(ll);
     }
 
 

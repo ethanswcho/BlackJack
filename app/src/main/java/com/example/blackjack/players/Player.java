@@ -13,8 +13,8 @@ public class Player extends Character{
 
     int money;
 
-    public Player(int m, Context context){
-        super(context);
+    public Player(int m, LinearLayout ll){
+        super(ll);
         this.money = m;
     }
 

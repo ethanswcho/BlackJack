@@ -18,20 +18,27 @@ public class Game extends AppCompatActivity {
     Deck deck;
     Player player;
     Dealer dealer;
+    LinearLayout dealerLayout, playerLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
+        this.dealerLayout = (LinearLayout)findViewById(R.id.layout_dealer);
+        this.playerLayout = (LinearLayout)findViewById(R.id.layout_player);
+        this.dealerLayout.setVisibility(LinearLayout.VISIBLE);
+        this.playerLayout.setVisibility(LinearLayout.VISIBLE);
         this.initialize();
         this.start();
     }
 
+
     // Initialize player, dealer and deck.
     private void initialize(){
-        // this.context = this;
-        this.player = new Player(10000, this);
-        this.dealer = new Dealer(this);
+        //this.dealerLayout.removeAllViews();
+        //this.playerLayout.removeAllViews();
+        this.player = new Player(10000, this.playerLayout);
+        this.dealer = new Dealer(this.dealerLayout);
         this.deck = new Deck(this);
     }
 
