@@ -54,38 +54,64 @@
         android:id="@+id/layout_player"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:layout_marginBottom="80dp"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@+id/button_hit"
+        app:layout_constraintBottom_toTopOf="@+id/layout_player2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_player" />
 
     <LinearLayout
         android:id="@+id/layout_dealer"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:layout_marginBottom="150dp"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@+id/layout_player"
+        app:layout_constraintBottom_toTopOf="@+id/text_player"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_dealer" />
 
     <TextView
         android:id="@+id/text_dealer"
         android:layout_width="106dp"
         android:layout_height="44dp"
+        android:layout_marginStart="152dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="153dp"
+        android:layout_marginBottom="15dp"
+        android:gravity="center"
         android:text="Dealer"
         android:textSize="30sp"
-        tools:layout_editor_absoluteX="166dp"
-        tools:layout_editor_absoluteY="33dp" />
+        app:layout_constraintBottom_toTopOf="@+id/layout_dealer"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/text_player"
         android:layout_width="96dp"
         android:layout_height="42dp"
+        android:layout_marginStart="157dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="158dp"
+        android:layout_marginBottom="15dp"
+        android:gravity="center"
         android:text="Player"
         android:textSize="30sp"
-        tools:layout_editor_absoluteX="166dp"
-        tools:layout_editor_absoluteY="290dp" />
+        app:layout_constraintBottom_toTopOf="@+id/layout_player"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layout_dealer" />
+
+    <LinearLayout
+        android:id="@+id/layout_player2"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginBottom="60dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/button_hit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"></LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

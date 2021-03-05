@@ -2,6 +2,7 @@ package com.example.blackjack.game;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.widget.LinearLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,8 +27,9 @@ public class Game extends AppCompatActivity {
         setContentView(R.layout.activity_game);
         this.dealerLayout = (LinearLayout)findViewById(R.id.layout_dealer);
         this.playerLayout = (LinearLayout)findViewById(R.id.layout_player);
-        this.dealerLayout.setVisibility(LinearLayout.VISIBLE);
-        this.playerLayout.setVisibility(LinearLayout.VISIBLE);
+        //this.dealerLayout.setVisibility(LinearLayout.VISIBLE);
+        //this.playerLayout.setVisibility(LinearLayout.VISIBLE);
+        this.playerLayout.setGravity(Gravity.LEFT);
         this.initialize();
         this.start();
     }
