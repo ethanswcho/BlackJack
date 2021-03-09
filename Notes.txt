@@ -1,2 +1,11 @@
 Initially only try to do hit or pass
 
+
+Buttons: Make it a new object so I can only call
+
+Game: 
+intialize groups (initializebutton() intializetext() etc...)
+
+Settings:
+Starting money: <10000
+Dealer hits/doesn't hit soft 17
