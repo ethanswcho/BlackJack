@@ -6,6 +6,86 @@
     android:layout_height="match_parent"
     tools:context=".game.Game">
 
+    <LinearLayout
+        android:id="@+id/layout_postgame"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHeight_percent=".5"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_percent=".5">
+
+        <TextView
+            android:id="@+id/text_status"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center_horizontal"
+            android:text="Player Win!"
+            android:textAlignment="gravity"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/text_winlossamount"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center_horizontal"
+            android:text="+ $10"
+            android:textAlignment="gravity"
+            android:textColor="#4CAF50"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/text_total"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center_horizontal"
+            android:text="Total: $10000"
+            android:textAlignment="gravity"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:id="@+id/layout_betting"
+            android:layout_width="250dp"
+            android:layout_height="50dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/text_saysbet"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="TextView"
+                android:textAlignment="textEnd"
+                android:textSize="30sp"
+                tools:text="Bet:" />
+
+            <TextView
+                android:id="@+id/text_betamount"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:inputType="number"
+                android:textAlignment="textStart"
+                android:textSize="30sp"
+                tools:text="10000" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/button_startagain"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Start" />
+
+    </LinearLayout>
+
     <Button
         android:id="@+id/button_hit"
         android:layout_width="124dp"
@@ -59,7 +139,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_player" />
+        app:layout_constraintTop_toBottomOf="@+id/text_player" >
+
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/layout_dealer"
@@ -74,11 +156,9 @@
 
     <TextView
         android:id="@+id/text_dealer"
-        android:layout_width="106dp"
+        android:layout_width="200dp"
         android:layout_height="44dp"
-        android:layout_marginStart="152dp"
         android:layout_marginTop="50dp"
-        android:layout_marginEnd="153dp"
         android:layout_marginBottom="15dp"
         android:gravity="center"
         android:text="Dealer"
@@ -90,17 +170,16 @@
 
     <TextView
         android:id="@+id/text_player"
-        android:layout_width="96dp"
+        android:layout_width="200dp"
         android:layout_height="42dp"
-        android:layout_marginStart="157dp"
         android:layout_marginTop="15dp"
-        android:layout_marginEnd="158dp"
         android:layout_marginBottom="15dp"
         android:gravity="center"
         android:text="Player"
         android:textSize="30sp"
         app:layout_constraintBottom_toTopOf="@+id/layout_player"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/layout_dealer" />
 
@@ -112,7 +191,9 @@
         android:orientation="horizontal"
         app:layout_constraintBottom_toTopOf="@+id/button_hit"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"></LinearLayout>
+        app:layout_constraintStart_toStartOf="parent">
+
+    </LinearLayout>
 
     <TextView
         android:id="@+id/text_money"

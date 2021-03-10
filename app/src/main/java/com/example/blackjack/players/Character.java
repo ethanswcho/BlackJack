@@ -20,37 +20,49 @@ public class Character {
     String title;
     int layoutPosition;
     TextView titleText;
+    boolean containsAce = false;
+    LinearLayout.LayoutParams lp;
 
     public Character(LinearLayout ll, TextView tv){
-        this.value=0;
+        this.value = 0;
         this.cards = new ArrayList<Card>();
         this.cardsLayout = ll;
         this.layoutPosition = 0;
         this.titleText = tv;
+        this.initializeLayoutParams();
     }
 
-    // Reset cards list and layout.
-    public void resetCards(){
-        this.cards.clear();
-        this.cardsLayout.removeAllViews();
+    // Initialize layout parameters for CardPhotos (which are ImageViews).
+    private void initializeLayoutParams(){
+        this.lp = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT);
+        lp.gravity = Gravity.LEFT;
+        lp.weight = 1;
     }
 
+    // Deal a card to this character, and update fields as necessary based on the card.
     public void deal(Card c){
+        if(c.getName() == Card.Name.Ace){
+            this.containsAce = true;
+        }
         this.cards.add(c);
         this.value += c.getValue();
         ImageView cp = c.getCardPhoto();
-        LinearLayout.LayoutParams lp =
-                new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT);
-        lp.gravity = Gravity.LEFT;
-        lp.weight = 1;
-        cp.setLayoutParams(lp);
-        this.cardsLayout.addView(cp);
-
-        titleText.setText(title + " " + this.value);
+        cp.setLayoutParams(this.lp);
+        cardsLayout.addView(cp);
+        this.changeTitleText();
     }
 
-    public int getValue(){
-        return this.value;
+    private void changeTitleText(){
+        String text = title + ": " + this.value;
+        if(this.aceChangesValue()){
+            text = text + "/" + (this.value+10);
+        }
+        this.titleText.setText(text);
+    }
+
+    // Returns true if current cards for this character contains an Ace AND it changes the value because of it.
+    public boolean aceChangesValue(){
+        return this.containsAce && this.value <= 11;
     }
 
     public void reset(){
@@ -58,10 +70,20 @@ public class Character {
         this.value=0;
         this.cards.clear();
         this.layoutPosition = 0;
+        this.containsAce = false;
     }
 
     public int getNumCards(){
         return this.cards.size();
+    }
+
+    public int getValue(){
+        if(this.aceChangesValue()){
+            return this.value + 10;
+        }
+        else{
+            return this.value;
+        }
     }
 
 }
