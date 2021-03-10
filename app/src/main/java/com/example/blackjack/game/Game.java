@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -27,6 +28,7 @@ public class Game extends AppCompatActivity {
     LinearLayout dealerLayout, playerLayout, postGameLayout;
     Button buttonHit, buttonPass, buttonDouble, buttonSplit;
     TextView textPlayer, textDealer, textMoney, textBet;
+    EditText textBetAmount;
     View currentLayout;
 
     // TODO: Customizable odds are below
@@ -52,6 +54,7 @@ public class Game extends AppCompatActivity {
         this.textDealer = findViewById(R.id.text_dealer);
         this.textMoney = findViewById(R.id.text_money);
         this.textBet = findViewById(R.id.text_bet);
+        this.textBetAmount = findViewById(R.id.text_betamount);
 
         this.buttonHit = findViewById(R.id.button_hit);
         this.buttonPass = findViewById(R.id.button_pass);
