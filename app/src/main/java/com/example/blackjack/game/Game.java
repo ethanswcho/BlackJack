@@ -9,14 +9,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintSet;
 
 import com.example.blackjack.R;
 import com.example.blackjack.deck.Deck;
 import com.example.blackjack.players.Dealer;
 import com.example.blackjack.players.Player;
 
-import java.util.concurrent.TimeUnit;
+import java.util.ArrayList;
 
 public class Game extends AppCompatActivity {
 
@@ -26,10 +25,11 @@ public class Game extends AppCompatActivity {
     Player player;
     Dealer dealer;
     LinearLayout dealerLayout, playerLayout, postGameLayout;
-    Button buttonHit, buttonPass, buttonDouble, buttonSplit;
-    TextView textPlayer, textDealer, textMoney, textBet;
+    Button buttonHit, buttonPass, buttonDouble, buttonSplit, buttonPlayAgain;
+    TextView textPlayer, textDealer, textMoney, textBet, textError, textStatus, textWinLossAmount, textTotal;
     EditText textBetAmount;
     View currentLayout;
+    ArrayList<View> mainGameViews;
 
     // TODO: Customizable odds are below
     int bet = 10;
@@ -40,14 +40,13 @@ public class Game extends AppCompatActivity {
 
     Handler h;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
-        currentLayout = findViewById(android.R.id.content);
-        this.dealerLayout = (LinearLayout)findViewById(R.id.layout_dealer);
-        this.playerLayout = (LinearLayout)findViewById(R.id.layout_player);
+        this.currentLayout = findViewById(android.R.id.content);
+        this.dealerLayout = findViewById(R.id.layout_dealer);
+        this.playerLayout = findViewById(R.id.layout_player);
         this.postGameLayout = findViewById(R.id.layout_postgame);
 
         this.textPlayer = findViewById(R.id.text_player);
@@ -55,40 +54,53 @@ public class Game extends AppCompatActivity {
         this.textMoney = findViewById(R.id.text_money);
         this.textBet = findViewById(R.id.text_bet);
         this.textBetAmount = findViewById(R.id.text_betamount);
+        this.textError = findViewById(R.id.text_error);
+        this.textStatus = findViewById(R.id.text_status);
+        this.textWinLossAmount = findViewById(R.id.text_winlossamount);
+        this.textTotal = findViewById(R.id.text_total);
 
         this.buttonHit = findViewById(R.id.button_hit);
         this.buttonPass = findViewById(R.id.button_pass);
         this.buttonDouble = findViewById(R.id.button_double);
         this.buttonSplit = findViewById(R.id.button_split);
 
-        buttonHit.setOnClickListener(new View.OnClickListener(){
+        this.buttonHit.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
                 doHit();
             }
         });
-        buttonPass.setOnClickListener(new View.OnClickListener(){
+        this.buttonPass.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
                 doPass();
             }
         });
-        buttonDouble.setOnClickListener(new View.OnClickListener(){
+        this.buttonDouble.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
                 doDouble();
             }
         });
-        buttonSplit.setOnClickListener(new View.OnClickListener(){
+        this.buttonSplit.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
                 doSplit();
+            }
+        });
+        this.buttonPlayAgain = findViewById(R.id.button_playagain);
+        this.buttonPlayAgain.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                playAgain();
             }
         });
 
         this.player = new Player(this.playerLayout, this.textPlayer, this.startingMoney);
         this.dealer = new Dealer(this.dealerLayout, this.textDealer);
         this.dealer.setHittingLimit(this.hittingLimit);
+        this.postGameLayout.setVisibility(View.INVISIBLE);
+        this.mainGameViews = TransitionManager.getGameViews(this.currentLayout, this.postGameLayout);
 
         this.h = new Handler();
         this.reset();
@@ -96,33 +108,31 @@ public class Game extends AppCompatActivity {
 
     //Reset player/dealer cards and the deck, then does the initial dealing. (Called onCreate and each hand)
     private void reset(){
-        this.bet=10;
         this.dealer.reset();
         this.player.reset();
         this.deck = new Deck(this);
         this.textMoney.setText("$" + Float.toString(this.player.getMoney()));
         this.textBet.setText("$" + this.bet);
+        this.textError.setVisibility(View.INVISIBLE);
         this.initialDealing();
-        this.postGameTransition();
     }
 
-    private void postGameTransition(){
-        float a = 0.1f;
-        this.buttonHit.setAlpha(a);
-        this.buttonPass.setAlpha(a);
-        this.buttonDouble.setAlpha(a);
-        this.buttonSplit.setAlpha(a);
-        this.dealerLayout.setAlpha(a);
-        this.playerLayout.setAlpha(a);
-        this.textPlayer.setAlpha(a);
-        this.textDealer.setAlpha(a);
-        this.textMoney.setAlpha(a);
-        this.textBet.setAlpha(a);
 
-        this.postGameLayout.setVisibility(View.VISIBLE);
+    // When PlayAgain button is pressed, validate the bet. If bet is good, reset and restart the game.
+    private void playAgain(){
+        BetManager.betState bs = BetManager.checkBet(this.textBetAmount, this.player.getMoney());
+        if(bs == BetManager.betState.OK){
+            this.bet = BetManager.getIntBet(this.textBetAmount);
+            this.reset();
+            TransitionManager.preGameTransition(mainGameViews, postGameLayout);
+        }
+        else{
+            BetManager.setErrorMessage(bs, this.textError);
+            this.textError.setVisibility(View.VISIBLE);
+        }
     }
 
-    // Does the intial dealing. 2 cards to player and 1 to dealer. Checks if player got BJ after.
+    // Does the initial dealing. 2 cards to player and 1 to dealer. Checks if player got BJ after.
     private void initialDealing(){
         this.player.deal(this.deck.getACard());
         this.dealer.deal(this.deck.getACard());
@@ -140,8 +150,8 @@ public class Game extends AppCompatActivity {
     public void doPass(){
         while(this.dealer.getValue() < this.dealer.getHittingLimit()){
             this.dealer.deal(this.deck.getACard());
-            this.delayedCheck();
         }
+        this.delayedCheck();
     }
 
     //TODO:Implement double and splits.
@@ -157,93 +167,34 @@ public class Game extends AppCompatActivity {
     //Player splits. (Linked to SPLIT button)
     public void doSplit(){}
 
-    // Checks current game state.
-    void checkState(){
-        // Check for BlackJack
-        if (this.player.getNumCards() == 2 && this.player.getValue() == 21){
-            this.playerBlackJack();
-        }
-
-        // Check for busts
-        // player bust (loss)
-        else if (this.player.getValue() > 21) {
-            System.out.println("1");
-            this.playerLoss();
-        }
-        // dealer bust (win)
-        else if (this.dealer.getValue() > 21) {
-            System.out.println("2");
-            this.playerWin();
-        }
-
-        // No player/dealer busts
-        // Compare values.
-        if(this.dealer.getValue() >= this.dealer.getHittingLimit()) {
-            // player > dealer (win)
-            if (this.player.getValue() > this.dealer.getValue()) {
-                System.out.println("3");
-                this.playerWin();
-            }
-            // player < dealer (loss)
-            else if (this.player.getValue() < this.dealer.getValue()) {
-                System.out.println("4");
-                this.playerLoss();
-            }
-            // player == dealer (tie)
-            else if (this.player.getValue() == this.dealer.getValue()){
-                this.playerTie();
-            }
+    // Checks current game state and resolves it if need be.
+    // If the game is resolved (player wins/loses), then transitions to post-game UI.
+    public void delayedCheck(){
+        StateManager.State state = StateManager.checkState(player, dealer);
+        if(state != StateManager.State.NONE){
+            StateManager.resolveState(state, player, bet, blackJackMultiplier);
+            TransitionManager.preparePostGameLayout(textStatus, textWinLossAmount, textTotal,
+                    bet, player.getMoney(), blackJackMultiplier, state);
+            TransitionManager.postGameTransition(mainGameViews, postGameLayout);
         }
     }
 
-    void playerBlackJack(){
-        this.player.winMoney((float)(this.bet*this.blackJackMultiplier));
-        //this.wait(3000);
-        this.reset();
-    }
-
-    void playerWin(){
-        this.player.winMoney(this.bet);
-        //this.wait(3000);
-        this.reset();
-    }
-
-    void playerLoss(){
-        this.player.loseMoney(this.bet);
-        //this.wait(3000);
-        this.reset();
-    }
-
-    void playerTie(){
-        this.reset();
-    }
-
+    /*
     public void delayedCheck(){
         //Handler h = new Handler();
         this.h.postDelayed(new Runnable() {
             @Override
             public void run(){
-                checkState();
+                StateManager.State state = StateManager.checkState(player, dealer);
+                if(state != StateManager.State.NONE){
+                    StateManager.resolveState(state, player, bet, blackJackMultiplier);
+                    TransitionManager.preparePostGameLayout(textStatus, textWinLossAmount, textTotal,
+                            bet, player.getMoney(), state);
+                    TransitionManager.postGameTransition(mainGameViews, postGameLayout);
+                }
             }
-        }, 1000);
+        }, 2000);
     }
 
-
-    public static void wait(int ms) {
-        try {
-            Thread.sleep(ms);
-        }
-        catch(InterruptedException ex) {
-            System.out.println("LMAO!");
-            Thread.currentThread().interrupt();
-        }
-    }
-
-    // Gets new deck. Invoked when we have gone through more than half the deck.
-    private void getNewDeck() {
-        if (deck.pastHalf()) {
-            this.deck = new Deck(this);
-        }
-    }
-
+     */
 }

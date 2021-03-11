@@ -1,11 +1,25 @@
-Initially only try to do hit or pass
 
-
-Buttons: Make it a new object so I can only call
+All classes:
+Look over methods/fields and assign necessary keywords.
 
 Game: 
 intialize groups (initializebutton() intializetext() etc...)
 
+postGame:
+Add chips option for common bets (1/5/10/20/50/100)
+
 Settings:
 Starting money: <10000
 Dealer hits/doesn't hit soft 17
+what happens when both get blackjack
+
+TODO 3/10
+Implement Double/Split
+
+TODO Later
+Make SETTINGS
+Make ABOUT
+Make Animations with delay in between
+Look over Code
+
+	

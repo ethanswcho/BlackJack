@@ -73,10 +73,6 @@ public class Character {
         this.containsAce = false;
     }
 
-    public int getNumCards(){
-        return this.cards.size();
-    }
-
     public int getValue(){
         if(this.aceChangesValue()){
             return this.value + 10;
@@ -84,6 +80,10 @@ public class Character {
         else{
             return this.value;
         }
+    }
+
+    public int getNumCards(){
+        return this.cards.size();
     }
 
 }
