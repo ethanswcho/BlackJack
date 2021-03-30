@@ -52,7 +52,7 @@
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:orientation="horizontal"
-            app:layout_constraintBottom_toTopOf="@+id/layout_player2"
+            app:layout_constraintBottom_toTopOf="@+id/layout_splitter"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -101,7 +101,7 @@
             app:layout_constraintTop_toBottomOf="@+id/layout_dealer" />
 
         <LinearLayout
-            android:id="@+id/layout_player2"
+            android:id="@+id/layout_splitter"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginBottom="60dp"

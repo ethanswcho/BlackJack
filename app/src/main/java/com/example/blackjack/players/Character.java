@@ -39,7 +39,10 @@ public class Character {
         lp.weight = 1;
     }
 
-    // Deal a card to this character, and update fields as necessary based on the card.
+    // Deals a card to the character. Subsequently updates:
+    // cards
+    // cardsLayout
+    // value
     public void deal(Card c){
         if(c.getName() == Card.Name.Ace){
             this.containsAce = true;
@@ -52,6 +55,7 @@ public class Character {
         this.changeTitleText();
     }
 
+    // Sets title text to correctly display current value
     private void changeTitleText(){
         String text = title + ": " + this.value;
         if(this.aceChangesValue()){
@@ -60,7 +64,7 @@ public class Character {
         this.titleText.setText(text);
     }
 
-    // Returns true if current cards for this character contains an Ace AND it changes the value because of it.
+    // Returns true if current cards for this character contains an Ace AND the value changes because of it.
     public boolean aceChangesValue(){
         return this.containsAce && this.value <= 11;
     }

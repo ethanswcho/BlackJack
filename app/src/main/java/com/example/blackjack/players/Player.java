@@ -11,7 +11,6 @@ import java.util.ArrayList;
 
 public class Player extends Character{
 
-
     float money;
 
     public Player(LinearLayout ll, TextView tv, int m){
@@ -34,6 +33,11 @@ public class Player extends Character{
 
     public boolean canSplit(){
         return this.getNumCards() == 2 && (this.cards.get(0).getValue() == this.cards.get(1).getValue());
+    }
+
+    // Pops the second card and returns it => Splitter object will be initialized with the popped card
+    public Card popCard(){
+        return this.cards.remove(1);
     }
 
 }

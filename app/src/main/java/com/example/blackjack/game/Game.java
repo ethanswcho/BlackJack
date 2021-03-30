@@ -3,7 +3,6 @@ package com.example.blackjack.game;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -12,9 +11,12 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.blackjack.R;
+import com.example.blackjack.deck.Card;
 import com.example.blackjack.deck.Deck;
+import com.example.blackjack.players.Character;
 import com.example.blackjack.players.Dealer;
 import com.example.blackjack.players.Player;
+import com.example.blackjack.players.Splitter;
 
 import java.util.ArrayList;
 
@@ -23,10 +25,12 @@ public class Game extends AppCompatActivity {
     //public static Context context;
     Deck deck;
     Player player;
+    Splitter splitter;
     Dealer dealer;
-    LinearLayout dealerLayout, playerLayout, playerLayout2, postGameLayout, splitLayout;
+    Character currentCharacter;
+    LinearLayout dealerLayout, playerLayout, splitterLayout, postGameLayout, splitLayout;
     Button buttonHit, buttonPass, buttonDouble, buttonSplit, buttonPlayAgain;
-    TextView textPlayer, textPlayer2, textDealer, textMoney, textBet, textError, textStatus, textWinLossAmount, textTotal;
+    TextView textPlayer, textSplitter, textDealer, textMoney, textBet, textError, textStatus, textWinLossAmount, textTotal;
     EditText textBetAmount;
     View currentLayout;
     ArrayList<View> mainGameViews;
@@ -47,12 +51,12 @@ public class Game extends AppCompatActivity {
         this.currentLayout = findViewById(android.R.id.content);
         this.dealerLayout = findViewById(R.id.layout_dealer);
         this.playerLayout = findViewById(R.id.layout_player);
-        this.playerLayout2 = findViewById(R.id.layout_player2);
+        this.splitterLayout = findViewById(R.id.layout_splitter);
         this.postGameLayout = findViewById(R.id.layout_postgame);
         this.splitLayout = findViewById(R.id.layout_split);
 
         this.textPlayer = findViewById(R.id.text_player);
-        this.textPlayer2 = findViewById(R.id.text_player2);
+        this.textSplitter = findViewById(R.id.text_splitter);
         this.textDealer = findViewById(R.id.text_dealer);
         this.textMoney = findViewById(R.id.text_money);
         this.textBet = findViewById(R.id.text_bet);
@@ -102,7 +106,6 @@ public class Game extends AppCompatActivity {
         this.player = new Player(this.playerLayout, this.textPlayer, this.startingMoney);
         this.dealer = new Dealer(this.dealerLayout, this.textDealer);
         this.dealer.setHittingLimit(this.hittingLimit);
-        this.postGameLayout.setVisibility(View.INVISIBLE);
         this.mainGameViews = TransitionManager.getGameViews(this.currentLayout, this.postGameLayout);
 
         this.h = new Handler();
@@ -111,6 +114,8 @@ public class Game extends AppCompatActivity {
 
     //Reset player/dealer cards and the deck, then does the initial dealing. (Called onCreate and each hand)
     private void reset(){
+        this.postGameLayout.setVisibility(View.INVISIBLE);
+        this.splitLayout.setVisibility(View.INVISIBLE);
         this.dealer.reset();
         this.player.reset();
         this.deck = new Deck(this);
@@ -121,7 +126,7 @@ public class Game extends AppCompatActivity {
     }
 
 
-    // When PlayAgain button is pressed, validate the bet. If bet is good, reset and restart the game.
+    // When PlayAgain button is pressed, validate the bet. If the bet is good, reset and restart the game.
     private void playAgain(){
         BetManager.betState bs = BetManager.checkBet(this.textBetAmount, this.player.getMoney());
         if(bs == BetManager.betState.OK){
@@ -170,7 +175,10 @@ public class Game extends AppCompatActivity {
     }
     //Player splits. (Linked to SPLIT button)
     public void doSplit(){
-
+        Card splitCard = this.player.popCard();
+        this.splitter = new Splitter(this.splitterLayout, this.textSplitter, splitCard, this.bet);
+        this.currentCharacter = this.splitter;
+        this.splitLayout.setVisibility(View.VISIBLE);
     }
 
     // Checks current game state and resolves it if need be.
