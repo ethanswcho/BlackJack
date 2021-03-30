@@ -3,6 +3,7 @@ package com.example.blackjack.game;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -20,13 +21,12 @@ import java.util.ArrayList;
 public class Game extends AppCompatActivity {
 
     //public static Context context;
-
     Deck deck;
     Player player;
     Dealer dealer;
-    LinearLayout dealerLayout, playerLayout, postGameLayout;
+    LinearLayout dealerLayout, playerLayout, playerLayout2, postGameLayout, splitLayout;
     Button buttonHit, buttonPass, buttonDouble, buttonSplit, buttonPlayAgain;
-    TextView textPlayer, textDealer, textMoney, textBet, textError, textStatus, textWinLossAmount, textTotal;
+    TextView textPlayer, textPlayer2, textDealer, textMoney, textBet, textError, textStatus, textWinLossAmount, textTotal;
     EditText textBetAmount;
     View currentLayout;
     ArrayList<View> mainGameViews;
@@ -47,9 +47,12 @@ public class Game extends AppCompatActivity {
         this.currentLayout = findViewById(android.R.id.content);
         this.dealerLayout = findViewById(R.id.layout_dealer);
         this.playerLayout = findViewById(R.id.layout_player);
+        this.playerLayout2 = findViewById(R.id.layout_player2);
         this.postGameLayout = findViewById(R.id.layout_postgame);
+        this.splitLayout = findViewById(R.id.layout_split);
 
         this.textPlayer = findViewById(R.id.text_player);
+        this.textPlayer2 = findViewById(R.id.text_player2);
         this.textDealer = findViewById(R.id.text_dealer);
         this.textMoney = findViewById(R.id.text_money);
         this.textBet = findViewById(R.id.text_bet);
@@ -157,6 +160,7 @@ public class Game extends AppCompatActivity {
     //TODO:Implement double and splits.
     //Player doubles. Doubles the amount of bet and only gets one card. (Linked to DOUBLE button)
     public void doDouble(){
+        this.bet *= 2;
         this.player.deal(this.deck.getACard());
         this.delayedCheck();
         while(this.dealer.getValue() < this.dealer.getHittingLimit()){
@@ -165,7 +169,9 @@ public class Game extends AppCompatActivity {
         }
     }
     //Player splits. (Linked to SPLIT button)
-    public void doSplit(){}
+    public void doSplit(){
+
+    }
 
     // Checks current game state and resolves it if need be.
     // If the game is resolved (player wins/loses), then transitions to post-game UI.

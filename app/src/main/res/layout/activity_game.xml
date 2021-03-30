@@ -13,14 +13,13 @@
         android:gravity="center_horizontal"
         android:orientation="vertical"
         android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHeight_percent=".5"
         app:layout_constraintHorizontal_bias="0.528"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintWidth_percent=".5"
-        tools:layout_editor_absoluteY="85dp">
+        app:layout_constraintWidth_percent=".5">
 
         <TextView
             android:id="@+id/text_status"
@@ -152,11 +151,10 @@
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@+id/layout_player2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_player" >
+        app:layout_constraintTop_toBottomOf="@+id/text_player">
 
     </LinearLayout>
 
@@ -165,7 +163,6 @@
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@+id/text_player"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -175,13 +172,12 @@
         android:id="@+id/text_dealer"
         android:layout_width="200dp"
         android:layout_height="44dp"
-        android:layout_marginTop="50dp"
-        android:layout_marginBottom="15dp"
+        android:layout_marginTop="32dp"
         android:gravity="center"
         android:text="Dealer"
         android:textSize="30sp"
-        app:layout_constraintBottom_toTopOf="@+id/layout_dealer"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -189,28 +185,14 @@
         android:id="@+id/text_player"
         android:layout_width="200dp"
         android:layout_height="42dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginBottom="15dp"
+        android:layout_marginTop="36dp"
         android:gravity="center"
         android:text="Player"
         android:textSize="30sp"
-        app:layout_constraintBottom_toTopOf="@+id/layout_player"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/layout_dealer" />
-
-    <LinearLayout
-        android:id="@+id/layout_player2"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_marginBottom="60dp"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@+id/button_hit"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-
-    </LinearLayout>
 
     <TextView
         android:id="@+id/text_money"
@@ -239,5 +221,35 @@
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/layout_split"
+        android:layout_width="408dp"
+        android:layout_height="141dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="2dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layout_player">
+
+        <TextView
+            android:id="@+id/text_player2"
+            android:layout_width="200dp"
+            android:layout_height="42dp"
+            android:layout_gravity="end"
+            android:layout_marginEnd="104dp"
+            android:gravity="center"
+            android:text="Player"
+            android:textSize="30sp" />
+
+        <LinearLayout
+            android:id="@+id/layout_player2"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginBottom="40dp"
+            android:orientation="horizontal">
+
+        </LinearLayout>
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

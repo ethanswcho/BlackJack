@@ -32,5 +32,8 @@ public class Player extends Character{
         this.money += amount;
     }
 
+    public boolean canSplit(){
+        return this.getNumCards() == 2 && (this.cards.get(0).getValue() == this.cards.get(1).getValue());
+    }
 
 }

@@ -4,6 +4,7 @@ Look over methods/fields and assign necessary keywords.
 
 Game: 
 intialize groups (initializebutton() intializetext() etc...)
+Implement a screen when player runs out of money
 
 postGame:
 Add chips option for common bets (1/5/10/20/50/100)

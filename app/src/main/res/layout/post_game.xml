@@ -8,15 +8,18 @@
 
     <LinearLayout
         android:id="@+id/layout_postgame"
-        android:layout_width="322dp"
-        android:layout_height="502dp"
-        android:layout_marginEnd="89dp"
+        android:layout_width="316dp"
+        android:layout_height="470dp"
         android:gravity="center_horizontal"
         android:orientation="vertical"
         android:visibility="visible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHeight_percent=".5"
+        app:layout_constraintHorizontal_bias="0.528"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_percent=".5">
 
         <TextView
             android:id="@+id/text_status"
@@ -53,7 +56,7 @@
             android:id="@+id/layout_betting"
             android:layout_width="250dp"
             android:layout_height="50dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="0dp"
             android:orientation="horizontal">
 
             <TextView
@@ -80,10 +83,22 @@
 
         <Button
             android:id="@+id/button_playagain"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Play Again!"
             android:textSize="30sp" />
+
+        <TextView
+            android:id="@+id/text_error"
+            android:layout_width="250dp"
+            android:layout_height="130dp"
+            android:layout_marginBottom="12dp"
+            android:text="TextView"
+            android:textAlignment="center"
+            android:textColor="@android:color/black"
+            android:textSize="20sp"
+            android:visibility="invisible"
+            app:layout_constraintWidth_percent=".5" />
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

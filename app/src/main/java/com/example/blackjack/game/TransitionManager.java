@@ -74,6 +74,21 @@ public class TransitionManager {
         postGameLayout.setVisibility(View.INVISIBLE);
     }
 
+    // Returns the views used in main Game (All views - views in postGameLayout)
+    public static ArrayList<View> getGameViews(View gameLayout, View postGameLayout){
+        ViewGroup tempVG = (ViewGroup)gameLayout;
+        View tempV = tempVG.getChildAt(0);
+        ArrayList<View>gameLayoutChildren = getChildViews(tempV);
+        for(int i=0; i<gameLayoutChildren.size(); i++){
+            View v = gameLayoutChildren.get(i);
+            if(v.getId() == postGameLayout.getId()){
+                gameLayoutChildren.remove(i);
+                break;
+            }
+        }
+        return gameLayoutChildren;
+    }
+
     // Fade out given list of views
     private static void changeViewsAlpha(ArrayList<View> views, float alpha){
         for(int i=0; i<views.size(); i++) {
@@ -95,21 +110,6 @@ public class TransitionManager {
                 views.get(i).setEnabled(false);
             }
         }
-    }
-
-    // Returns the views used in main Game (All views - views in postGameLayout)
-    public static ArrayList<View> getGameViews(View gameLayout, View postGameLayout){
-        ViewGroup tempVG = (ViewGroup)gameLayout;
-        View tempV = tempVG.getChildAt(0);
-        ArrayList<View>gameLayoutChildren = getChildViews(tempV);
-        for(int i=0; i<gameLayoutChildren.size(); i++){
-            View v = gameLayoutChildren.get(i);
-            if(v.getId() == postGameLayout.getId()){
-                gameLayoutChildren.remove(i);
-                break;
-            }
-        }
-        return gameLayoutChildren;
     }
 
     // Get Child views of the input view
