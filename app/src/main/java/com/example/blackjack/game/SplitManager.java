@@ -3,8 +3,14 @@ package com.example.blackjack.game;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.blackjack.players.Splitter;
+
 public class SplitManager {
 
+    boolean splitStatus;
+    Splitter splitter;
+    int splitDebt;
+    boolean doubleStatus;
 
 
     public static void displaySplitUI(ViewGroup splitGroup){

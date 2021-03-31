@@ -23,6 +23,7 @@ public class Player extends Character{
         return this.money;
     }
 
+    // TODO: Combine into one method
     public void loseMoney(float amount){
         this.money -= amount;
     }
@@ -35,9 +36,13 @@ public class Player extends Character{
         return this.getNumCards() == 2 && (this.cards.get(0).getValue() == this.cards.get(1).getValue());
     }
 
-    // Pops the second card and returns it => Splitter object will be initialized with the popped card
+    //Pops the second card, removes its value from player, removes its image from player cardsLayout
+    // then returns the popped card so it can be used in Splitter.
     public Card popCard(){
-        return this.cards.remove(1);
+        this.cardsLayout.removeViewAt(1);
+        Card out =  this.cards.remove(1);
+        this.value = this.value - out.getValue();
+        return out;
     }
 
 }

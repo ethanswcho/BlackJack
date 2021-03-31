@@ -8,49 +8,119 @@
 
     <LinearLayout
         android:id="@+id/layout_postgame"
-        android:layout_width="316dp"
-        android:layout_height="470dp"
+        android:layout_width="391dp"
+        android:layout_height="566dp"
         android:gravity="center_horizontal"
         android:orientation="vertical"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHeight_percent=".5"
-        app:layout_constraintHorizontal_bias="0.528"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.497"
         app:layout_constraintWidth_percent=".5">
 
         <TextView
-            android:id="@+id/text_status"
+            android:id="@+id/textView11"
             android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:gravity="center_horizontal"
-            android:text="Player Win!"
-            android:textAlignment="gravity"
-            android:textSize="40sp"
-            android:textStyle="bold" />
+            android:layout_height="wrap_content"
+            android:height="50dp" />
+
+        <LinearLayout
+            android:id="@+id/layout_status1"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/text_status1"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="0.7"
+                android:gravity="center_horizontal|center_vertical"
+                android:text="Player DOUBLE LOSS!"
+                android:textColor="#000000"
+                android:textSize="25sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/text_money1"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="0.3"
+                android:gravity="center_vertical"
+                android:text="+$1000"
+                android:textAlignment="textEnd"
+                android:textColor="#A50000"
+                android:textSize="35sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_status2"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/text_status2"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="0.7"
+                android:gravity="center_horizontal|center_vertical"
+                android:text="Player DOUBLE LOSS!"
+                android:textColor="#000000"
+                android:textSize="25sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/text_money2"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="0.3"
+                android:gravity="center_vertical"
+                android:text="+$1000"
+                android:textAlignment="textEnd"
+                android:textSize="35sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_total"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/text_total"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="0.7"
+                android:gravity="center_horizontal|center_vertical"
+                android:text="Total:"
+                android:textColor="#000000"
+                android:textSize="25sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/text_totalMoney"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="0.3"
+                android:gravity="center_vertical"
+                android:text="+$1000"
+                android:textAlignment="textEnd"
+                android:textColor="#000000"
+                android:textSize="35sp"
+                android:textStyle="bold" />
+        </LinearLayout>
 
         <TextView
-            android:id="@+id/text_winlossamount"
+            android:id="@+id/textView10"
             android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:gravity="center_horizontal"
-            android:text="+ $10"
-            android:textAlignment="gravity"
-            android:textColor="#4CAF50"
-            android:textSize="40sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/text_total"
-            android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:gravity="center_horizontal"
-            android:text="Total: $10000"
-            android:textAlignment="gravity"
-            android:textSize="40sp"
-            android:textStyle="bold" />
+            android:layout_height="wrap_content"
+            android:height="50dp" />
 
         <LinearLayout
             android:id="@+id/layout_betting"
@@ -222,34 +292,44 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <LinearLayout
-        android:id="@+id/layout_split"
-        android:layout_width="408dp"
-        android:layout_height="141dp"
-        android:layout_marginTop="2dp"
-        android:layout_marginEnd="2dp"
-        android:orientation="vertical"
+    <TextView
+        android:id="@+id/text_splitter"
+        android:layout_width="200dp"
+        android:layout_height="42dp"
+        android:layout_gravity="end"
+        android:gravity="center"
+        android:text="Player"
+        android:textSize="30sp"
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/layout_player">
+        app:layout_constraintRight_toLeftOf="@id/text_splitterBust"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layout_player" />
 
-        <TextView
-            android:id="@+id/text_splitter"
-            android:layout_width="200dp"
-            android:layout_height="42dp"
-            android:layout_gravity="end"
-            android:layout_marginEnd="104dp"
-            android:gravity="center"
-            android:text="Player"
-            android:textSize="30sp" />
+    <LinearLayout
+        android:id="@+id/layout_splitter"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:orientation="horizontal"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_splitter">
 
-        <LinearLayout
-            android:id="@+id/layout_splitter"
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:layout_marginBottom="40dp"
-            android:orientation="horizontal">
-
-        </LinearLayout>
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/text_splitterBust"
+        android:layout_width="105dp"
+        android:layout_height="42dp"
+        android:layout_gravity="end"
+        android:gravity="center"
+        android:text="BUST"
+        android:textColor="#DF0B0B"
+        android:textSize="30sp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/layout_splitter"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/text_splitter" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

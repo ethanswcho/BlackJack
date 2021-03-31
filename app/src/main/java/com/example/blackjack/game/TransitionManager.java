@@ -1,26 +1,24 @@
 package com.example.blackjack.game;
 
-import android.content.Context;
 import android.text.Html;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import com.example.blackjack.players.Dealer;
-import com.example.blackjack.players.Player;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
+// Manages transition from main game screen to post game screen
 public class TransitionManager {
 
+        /*
     // Prepares the post game layout with information from the current hand.
     public static void preparePostGameLayout(TextView textStatus, TextView textWinLossAmount,
-                                             TextView textTotal, int bet, float total,
-                                             float blackJackMultipler, StateManager.State state){
+                                              TextView textTotal, int bet, float total,
+                                              float blackJackMultipler, StateManager.State state){
         String status = "If you are seeing this status it is a bug";
         String color = "";
         String sign = "";
@@ -38,10 +36,22 @@ public class TransitionManager {
                 color="66ff00";
                 sign="+";
                 break;
+            case DOUBLE_WIN:
+                status="Player DOUBLE WIN!";
+                color="66ff00";
+                sign="+";
+                amount *= 2;
+                break;
             case LOSS:
-                status="Dealer WIN!";
+                status="PLAYER LOSS!";
                 color="#ff0000";
                 sign="-";
+                break;
+            case DOUBLE_LOSS:
+                status="PLAYER DOUBLE LOSS!";
+                color="#ff0000";
+                sign="-";
+                amount *= 2;
                 break;
             case TIE:
                 status="TIE!";
@@ -58,13 +68,104 @@ public class TransitionManager {
         textWinLossAmount.setText(Html.fromHtml(htmlText));
         textTotal.setText("TOTAL: " + String.valueOf(total));
     }
+         */
+
+    public static void preparePostGameLayout(LinearLayout statusLayout1, LinearLayout statusLayout2,
+                                             TextView textTotalMoney, int bet, float total, float blackJackMultiplier,
+                                             ArrayList<StateManager.State> states){
+
+        for(int i=0; i<states.size(); i++){
+
+            StateManager.State state = states.get(i);
+            String status = "If you are seeing this status it is a bug";
+            String color = "";
+            String sign = "";
+            float amount = bet;
+
+            switch(state){
+                case BLACKJACK:
+                    status="BLACKJACK!";
+                    color="66ff00";
+                    sign="+";
+                    amount *= blackJackMultiplier;
+                    break;
+                case WIN:
+                    status="WIN!";
+                    color="66ff00";
+                    sign="+";
+                    break;
+                case DOUBLE_WIN:
+                    status="DOUBLE WIN!";
+                    color="66ff00";
+                    sign="+";
+                    amount *= 2;
+                    break;
+                case LOSS:
+                    status="LOSS!";
+                    color="#ff0000";
+                    sign="-";
+                    break;
+                case DOUBLE_LOSS:
+                    status="DOUBLE LOSS!";
+                    color="#ff0000";
+                    sign="-";
+                    amount *= 2;
+                    break;
+                case TIE:
+                    status="TIE!";
+                    color="66ff00";
+                    sign="+";
+                    amount=0;
+                    break;
+                case NONE:
+                    status="STATUS IS NONE! this is a bug";
+                    break;
+            }
+            String prefix;
+            TextView textStatus, textAmount;
+
+            if(states.size() == 1){
+                prefix = "PLAYER ";
+                textStatus = (TextView)statusLayout2.getChildAt(0);
+                textAmount = (TextView)statusLayout2.getChildAt(1);
+            }
+
+            else{
+                prefix = "Hand" + String.valueOf(i+1) + " ";
+                if(i == 0){
+                    textStatus = (TextView)statusLayout1.getChildAt(0);
+                    textAmount = (TextView)statusLayout1.getChildAt(1);
+                }
+                else{
+                    textStatus = (TextView)statusLayout2.getChildAt(0);
+                    textAmount = (TextView)statusLayout2.getChildAt(1);
+                }
+            }
+            textStatus.setText(prefix + status);
+            textAmount.setText(sign + " $" + String.valueOf(amount));
+            if(sign == "+"){
+                textAmount.setTextColor(0xFF00FF00);
+            }
+            else if (sign == "-") {
+                textAmount.setTextColor(0xFFA50000);
+            }
+        }
+        textTotalMoney.setText("$" + String.valueOf(total));
+    }
+
+
 
     // Fade out main UI and enable post Game UI
     // Disable all background buttons
-    public static void postGameTransition(ArrayList<View> mainGameViews, View postGameLayout){
+    public static void postGameTransition(ArrayList<View> mainGameViews, View postGameLayout,
+                                          boolean splitStatus, LinearLayout splitLayout){
         changeViewsAlpha(mainGameViews, 0.1f);
         disableButtons(mainGameViews);
         postGameLayout.setVisibility(View.VISIBLE);
+
+        if(splitStatus == false){
+            splitLayout.setVisibility(View.INVISIBLE);
+        }
     }
 
     // Fade back in the main UI, disable post game UI
