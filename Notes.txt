@@ -5,6 +5,10 @@ Look over methods/fields and assign necessary keywords.
 Game: 
 intialize groups (initializebutton() intializetext() etc...)
 Implement a screen when player runs out of money
+Make hit/pass/double/split etc into its own class (GameControls)
+
+Player: 
+winmoney = changemoney
 
 postGame:
 Add chips option for common bets (1/5/10/20/50/100)
@@ -22,5 +26,15 @@ Make SETTINGS
 Make ABOUT
 Make Animations with delay in between
 Look over Code
+
+Split:
+highlight current active player
+
+TODO Today
+
+Make borders glow for active player
+(disable buttons during animation)
+update Double button availability
+update statemanager states (playerBUST, dealerBUST)
 
 	

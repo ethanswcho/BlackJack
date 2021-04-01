@@ -56,12 +56,22 @@ public class Character {
     }
 
     // Sets title text to correctly display current value
-    private void changeTitleText(){
+    public void changeTitleText(){
         String text = title + ": " + this.value;
         if(this.aceChangesValue()){
             text = text + "/" + (this.value+10);
         }
         this.titleText.setText(text);
+    }
+
+    public void updateContainsAce(){
+        for(Card card: this.cards){
+            if(card.getName() == Card.Name.Ace){
+                this.containsAce = true;
+                return;
+            }
+        }
+        this.containsAce = false;
     }
 
     // Returns true if current cards for this character contains an Ace AND the value changes because of it.
@@ -84,6 +94,10 @@ public class Character {
         else{
             return this.value;
         }
+    }
+
+    public boolean isBusted(){
+        return this.getValue() > 21;
     }
 
     public int getNumCards(){

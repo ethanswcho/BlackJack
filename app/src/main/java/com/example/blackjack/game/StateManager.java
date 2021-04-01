@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public class StateManager {
 
-    public static enum State{BLACKJACK, WIN, LOSS, DOUBLE_WIN, DOUBLE_LOSS, TIE, NONE}
+    public enum State{BLACKJACK, WIN, LOSS, DOUBLE_WIN, DOUBLE_LOSS, TIE, NONE}
 
     // Given player and dealer, check their hand and return the current gameState.
     public static State checkState(Character player, Dealer dealer, Boolean splitStatus, Boolean doubleStatus){

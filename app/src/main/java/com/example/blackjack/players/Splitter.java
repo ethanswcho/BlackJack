@@ -1,24 +1,28 @@
 package com.example.blackjack.players;
 
+import android.os.Handler;
+import android.os.Looper;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.blackjack.deck.Card;
+import com.example.blackjack.deck.Deck;
 import com.example.blackjack.game.StateManager;
 
 public class Splitter extends Character {
 
-    int bet;
     boolean doubleStatus;
-    int debt;
     TextView bustAlert;
     StateManager.State state;
+    boolean waitingDealer;
+    //Handler handler;
 
     public Splitter(LinearLayout ll, TextView tv, TextView bustAlert){
         super(ll, tv);
         this.title = "Split";
         this.bustAlert = bustAlert;
+        this.waitingDealer = false;
     }
 
     // Display Splitter UI
@@ -44,10 +48,24 @@ public class Splitter extends Character {
 
     public void setState(StateManager.State state){
         this.state = state;
+        if(this.state == StateManager.State.NONE){
+            setWaitingDealer(true);
+        }
+        if(this.isBusted()){
+            this.displayBust();
+        }
+    }
+
+    public void setWaitingDealer(boolean bool){
+        this.waitingDealer = bool;
     }
 
     public StateManager.State getState(){
         return this.state;
+    }
+
+    public boolean isWaitingDealer(){
+        return this.waitingDealer;
     }
 
     // If splitter value > 21: display that the splitter has busted for clarity.
@@ -59,6 +77,7 @@ public class Splitter extends Character {
     public void reset(){
         super.reset();
         this.state = StateManager.State.NONE;
+        this.waitingDealer = false;
     }
 
     /*

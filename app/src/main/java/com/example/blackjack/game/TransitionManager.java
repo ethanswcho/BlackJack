@@ -4,6 +4,7 @@ import android.text.Html;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -14,106 +15,43 @@ import java.util.Set;
 // Manages transition from main game screen to post game screen
 public class TransitionManager {
 
-        /*
-    // Prepares the post game layout with information from the current hand.
-    public static void preparePostGameLayout(TextView textStatus, TextView textWinLossAmount,
-                                              TextView textTotal, int bet, float total,
-                                              float blackJackMultipler, StateManager.State state){
-        String status = "If you are seeing this status it is a bug";
-        String color = "";
-        String sign = "";
-        float amount = bet;
-
-        switch(state){
-            case BLACKJACK:
-                status="BLACKJACK!";
-                color="66ff00";
-                sign="+";
-                amount *= blackJackMultipler;
-                break;
-            case WIN:
-                status="Player WIN!";
-                color="66ff00";
-                sign="+";
-                break;
-            case DOUBLE_WIN:
-                status="Player DOUBLE WIN!";
-                color="66ff00";
-                sign="+";
-                amount *= 2;
-                break;
-            case LOSS:
-                status="PLAYER LOSS!";
-                color="#ff0000";
-                sign="-";
-                break;
-            case DOUBLE_LOSS:
-                status="PLAYER DOUBLE LOSS!";
-                color="#ff0000";
-                sign="-";
-                amount *= 2;
-                break;
-            case TIE:
-                status="TIE!";
-                color="66ff00";
-                sign="+";
-                amount=0;
-                break;
-            case NONE:
-                status="STATUS IS NONE! this is a bug";
-                break;
-        }
-        textStatus.setText(status);
-        String htmlText = "<font color=" + color + ">" + sign + " $" + String.valueOf(amount) + "</font";
-        textWinLossAmount.setText(Html.fromHtml(htmlText));
-        textTotal.setText("TOTAL: " + String.valueOf(total));
-    }
-         */
-
     public static void preparePostGameLayout(LinearLayout statusLayout1, LinearLayout statusLayout2,
-                                             TextView textTotalMoney, int bet, float total, float blackJackMultiplier,
+                                             TextView textTotalMoney, EditText textBetAmount,
+                                             int bet, float total, float blackJackMultiplier,
                                              ArrayList<StateManager.State> states){
 
         for(int i=0; i<states.size(); i++){
-
             StateManager.State state = states.get(i);
             String status = "If you are seeing this status it is a bug";
-            String color = "";
             String sign = "";
             float amount = bet;
 
             switch(state){
                 case BLACKJACK:
                     status="BLACKJACK!";
-                    color="66ff00";
                     sign="+";
                     amount *= blackJackMultiplier;
                     break;
                 case WIN:
                     status="WIN!";
-                    color="66ff00";
                     sign="+";
                     break;
                 case DOUBLE_WIN:
                     status="DOUBLE WIN!";
-                    color="66ff00";
                     sign="+";
                     amount *= 2;
                     break;
                 case LOSS:
                     status="LOSS!";
-                    color="#ff0000";
                     sign="-";
                     break;
                 case DOUBLE_LOSS:
                     status="DOUBLE LOSS!";
-                    color="#ff0000";
                     sign="-";
                     amount *= 2;
                     break;
                 case TIE:
                     status="TIE!";
-                    color="66ff00";
                     sign="+";
                     amount=0;
                     break;
@@ -151,6 +89,7 @@ public class TransitionManager {
             }
         }
         textTotalMoney.setText("$" + String.valueOf(total));
+        textBetAmount.setText(String.valueOf(bet));
     }
 
 
@@ -162,7 +101,7 @@ public class TransitionManager {
         changeViewsAlpha(mainGameViews, 0.1f);
         disableButtons(mainGameViews);
         postGameLayout.setVisibility(View.VISIBLE);
-
+        // If player did not split, only one row of hand results should be shown
         if(splitStatus == false){
             splitLayout.setVisibility(View.INVISIBLE);
         }

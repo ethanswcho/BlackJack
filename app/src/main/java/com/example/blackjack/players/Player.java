@@ -32,6 +32,7 @@ public class Player extends Character{
         this.money += amount;
     }
 
+    // A player's hand is splittable if it is its initial hand (2 cards) AND both values are the same.
     public boolean canSplit(){
         return this.getNumCards() == 2 && (this.cards.get(0).getValue() == this.cards.get(1).getValue());
     }
@@ -42,6 +43,8 @@ public class Player extends Character{
         this.cardsLayout.removeViewAt(1);
         Card out =  this.cards.remove(1);
         this.value = this.value - out.getValue();
+        this.updateContainsAce();
+        this.changeTitleText();
         return out;
     }
 
