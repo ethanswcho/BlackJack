@@ -1,11 +1,13 @@
 package com.example.blackjack.game;
 
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -34,11 +36,13 @@ public class Game extends AppCompatActivity {
     TextView textPlayer, textSplitter, textDealer, textMoney, textBet, textError,
             textSplitterBust, textTotalMoney, textTotal;
     EditText textBetAmount;
+    ImageView arrowDealer, arrowPlayer, arrowSplitter;
     View currentLayout;
     ArrayList<View> mainGameViews;
     Boolean splitStatus, doubleStatus;
     Handler handler;
     Runnable delayedDeal, dc;
+    GradientDrawable border;
 
     // TODO: Customizable odds are below
     int bet = 10;
@@ -68,6 +72,10 @@ public class Game extends AppCompatActivity {
         this.textSplitterBust = findViewById(R.id.text_splitterBust);
         this.textTotal = findViewById(R.id.text_total);
         this.textTotalMoney = findViewById(R.id.text_totalMoney);
+
+        this.arrowDealer = findViewById(R.id.arrow_dealer);
+        this.arrowPlayer = findViewById(R.id.arrow_player);
+        this.arrowSplitter = findViewById(R.id.arrow_splitter);
 
         this.buttonHit = findViewById(R.id.button_hit);
         this.buttonPass = findViewById(R.id.button_pass);
@@ -127,9 +135,9 @@ public class Game extends AppCompatActivity {
             }
         };
 
-        this.player = new Player(this.playerLayout, this.textPlayer, this.startingMoney);
-        this.splitter = new Splitter(this.splitterLayout, this.textSplitter, this.textSplitterBust);
-        this.dealer = new Dealer(this.dealerLayout, this.textDealer);
+        this.player = new Player(this.playerLayout, this.textPlayer, this.arrowPlayer, this.startingMoney);
+        this.splitter = new Splitter(this.splitterLayout, this.textSplitter, this.arrowSplitter, this.textSplitterBust);
+        this.dealer = new Dealer(this.dealerLayout, this.textDealer, this.arrowDealer);
         this.dealer.setHittingLimit(this.hittingLimit);
         this.mainGameViews = TransitionManager.getGameViews(this.currentLayout, this.postGameLayout);
         this.reset();
@@ -149,6 +157,8 @@ public class Game extends AppCompatActivity {
         this.buttonDouble.setEnabled(true);
         this.buttonSplit.setEnabled(false);
         this.resetSplitter();
+        this.currentCharacter.toggleArrow();
+        this.dealer.disableArrow();
         this.initialDealing();
     }
 
@@ -204,6 +214,8 @@ public class Game extends AppCompatActivity {
         // Will display a new card every 1 second for animation effect.
         // After the dealer's value exceeds its hitting limit, will execute delayedCheck() after 1 second.
         else {
+            this.dealer.toggleArrow();
+            this.currentCharacter.toggleArrow();
             this.disableButtons();
             this.handler.postDelayed(delayedDeal, 500);
         }
@@ -230,7 +242,9 @@ public class Game extends AppCompatActivity {
         Card splitCard = this.player.popCard();
         this.splitter.deal(splitCard);
         this.splitter.displayUI();
+        this.currentCharacter.toggleArrow();
         this.currentCharacter = this.splitter;
+        this.currentCharacter.toggleArrow();
     }
 
     // Saves current splitter's state, then move onto the players hand.
@@ -240,8 +254,15 @@ public class Game extends AppCompatActivity {
         this.splitter.setState(StateManager.State.NONE);
         this.splitter.setDoubleStatus(this.doubleStatus);
         this.doubleStatus = false;
+        this.splitter.toggleArrow();
         this.currentCharacter = this.player;
+        this.currentCharacter.toggleArrow();
         this.buttonDouble.setEnabled(true);
+    }
+
+    private void playerTransition(){
+        this.currentCharacter.toggleArrow();
+        this.dealer.toggleArrow();
     }
 
     // Checks current game state and resolves it if need be.

@@ -3,6 +3,7 @@ package com.example.blackjack.players;
 import android.os.Handler;
 import android.os.Looper;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -18,8 +19,8 @@ public class Splitter extends Character {
     boolean waitingDealer;
     //Handler handler;
 
-    public Splitter(LinearLayout ll, TextView tv, TextView bustAlert){
-        super(ll, tv);
+    public Splitter(LinearLayout ll, TextView tv, ImageView a, TextView bustAlert){
+        super(ll, tv, a);
         this.title = "Split";
         this.bustAlert = bustAlert;
         this.waitingDealer = false;

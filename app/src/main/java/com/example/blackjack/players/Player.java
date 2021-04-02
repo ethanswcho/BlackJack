@@ -2,6 +2,7 @@ package com.example.blackjack.players;
 
 
 import android.content.Context;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -13,8 +14,8 @@ public class Player extends Character{
 
     float money;
 
-    public Player(LinearLayout ll, TextView tv, int m){
-        super(ll, tv);
+    public Player(LinearLayout ll, TextView tv, ImageView a, int m){
+        super(ll, tv, a);
         this.money = m;
         this.title = "Player";
     }

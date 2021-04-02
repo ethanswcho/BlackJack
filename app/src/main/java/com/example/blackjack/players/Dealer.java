@@ -4,6 +4,8 @@ import android.content.Context;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Looper;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -17,8 +19,8 @@ public class Dealer extends Character{
     //Change below to public final static
     int hittingLimit = 17;
 
-    public Dealer(LinearLayout ll, TextView tv){
-        super(ll, tv);
+    public Dealer(LinearLayout ll, TextView tv, ImageView a){
+        super(ll, tv, a);
         this.title = "Dealer";
     }
 

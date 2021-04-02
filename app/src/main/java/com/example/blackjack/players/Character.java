@@ -1,6 +1,7 @@
 package com.example.blackjack.players;
 
 import android.content.Context;
+import android.graphics.drawable.GradientDrawable;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
@@ -22,14 +23,23 @@ public class Character {
     TextView titleText;
     boolean containsAce = false;
     LinearLayout.LayoutParams lp;
+    GradientDrawable border;
+    ImageView arrow;
 
-    public Character(LinearLayout ll, TextView tv){
+    public Character(LinearLayout ll, TextView tv, ImageView a){
         this.value = 0;
         this.cards = new ArrayList<Card>();
         this.cardsLayout = ll;
         this.layoutPosition = 0;
         this.titleText = tv;
+        this.arrow = a;
         this.initializeLayoutParams();
+    }
+
+    private void initializeBorder(){
+        this.border = new GradientDrawable();
+        this.border.setColor(0xFFFFFFFF);
+        this.border.setStroke(4, 0xFFFF4D4D);
     }
 
     // Initialize layout parameters for CardPhotos (which are ImageViews).
@@ -100,8 +110,33 @@ public class Character {
         return this.getValue() > 21;
     }
 
+    // Red border to highlight current player
+    public void addBorder(){
+        this.cardsLayout.setBackground(border);
+    }
+
+    // Remove border from their hand
+    public void removeBorder(){
+        this.cardsLayout.setBackgroundResource(0);
+    }
+
+    public void enableArrow(){
+        this.arrow.setVisibility(View.VISIBLE);
+    }
+
+    public void unableArrow(){
+        this.arrow.setVisibility(View.INVISIBLE);
+    }
+
     public int getNumCards(){
         return this.cards.size();
     }
 
+    public void toggleArrow(){
+        //pass
+    }
+
+    public void setCurrentCharacter(){
+
+    }
 }
