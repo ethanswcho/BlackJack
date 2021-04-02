@@ -1,6 +1,5 @@
 package com.example.blackjack.game;
 
-import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -41,8 +40,7 @@ public class Game extends AppCompatActivity {
     ArrayList<View> mainGameViews;
     Boolean splitStatus, doubleStatus;
     Handler handler;
-    Runnable delayedDeal, dc;
-    GradientDrawable border;
+    Runnable delayedDeal, delayedCheck;
 
     // TODO: Customizable odds are below
     int bet = 10;
@@ -115,10 +113,10 @@ public class Game extends AppCompatActivity {
         });
 
         this.handler = new Handler(Looper.getMainLooper());
-        this.dc = new Runnable(){
+        this.delayedCheck = new Runnable(){
             @Override
             public void run(){
-                delayedCheck();
+                check();
             }
         };
         this.delayedDeal = new Runnable() {
@@ -130,7 +128,7 @@ public class Game extends AppCompatActivity {
                     handler.postDelayed(this, 1000);
                 }
                 else{
-                    handler.postDelayed(dc, 1000);
+                    handler.postDelayed(delayedCheck, 1000);
                 }
             }
         };
@@ -157,7 +155,7 @@ public class Game extends AppCompatActivity {
         this.buttonDouble.setEnabled(true);
         this.buttonSplit.setEnabled(false);
         this.resetSplitter();
-        this.currentCharacter.toggleArrow();
+        this.currentCharacter.enableArrow();
         this.dealer.disableArrow();
         this.initialDealing();
     }
@@ -192,7 +190,7 @@ public class Game extends AppCompatActivity {
         if(this.player.canSplit() == true){
             this.buttonSplit.setEnabled(true);
         }
-        this.delayedCheck();
+        this.check();
     }
 
     // current character gets one card. (Linked to HIT button)
@@ -200,7 +198,7 @@ public class Game extends AppCompatActivity {
     public void doHit(){
         this.currentCharacter.deal(this.deck.getACard());
         this.buttonDouble.setEnabled(false);
-        this.delayedCheck();
+        this.check();
     }
 
     // Player passes. (Linked to PASS button)
@@ -214,10 +212,9 @@ public class Game extends AppCompatActivity {
         // Will display a new card every 1 second for animation effect.
         // After the dealer's value exceeds its hitting limit, will execute delayedCheck() after 1 second.
         else {
-            this.dealer.toggleArrow();
-            this.currentCharacter.toggleArrow();
+            this.playerTransition();
             this.disableButtons();
-            this.handler.postDelayed(delayedDeal, 500);
+            this.handler.postDelayed(delayedDeal, 1000);
         }
     }
 
@@ -234,7 +231,20 @@ public class Game extends AppCompatActivity {
     public void doDouble(){
         this.doubleStatus = true;
         this.currentCharacter.deal(this.deck.getACard());
-        this.doPass();
+        // Double and the hand busted
+        if(this.currentCharacter.isBusted()){
+            // If this is a split hand that busted, then we need to move onto the main hand
+            if(this.splitStatus == true && this.currentCharacter.getClass() == Splitter.class){
+                this.splitTransition();
+            }
+            // If player hand busted, then end the game here after 1s, so player can see their bust
+            else{
+                this.handler.postDelayed(delayedCheck, 1000);
+            }
+        }
+        else{
+            this.doPass();
+        }
     }
     //Player splits. (Linked to SPLIT button)
     public void doSplit(){
@@ -242,9 +252,9 @@ public class Game extends AppCompatActivity {
         Card splitCard = this.player.popCard();
         this.splitter.deal(splitCard);
         this.splitter.displayUI();
-        this.currentCharacter.toggleArrow();
+        this.splitter.enableArrow();
+        this.player.disableArrow();
         this.currentCharacter = this.splitter;
-        this.currentCharacter.toggleArrow();
     }
 
     // Saves current splitter's state, then move onto the players hand.
@@ -254,20 +264,20 @@ public class Game extends AppCompatActivity {
         this.splitter.setState(StateManager.State.NONE);
         this.splitter.setDoubleStatus(this.doubleStatus);
         this.doubleStatus = false;
-        this.splitter.toggleArrow();
+        this.splitter.disableArrow();
         this.currentCharacter = this.player;
-        this.currentCharacter.toggleArrow();
+        this.currentCharacter.enableArrow();
         this.buttonDouble.setEnabled(true);
     }
 
     private void playerTransition(){
-        this.currentCharacter.toggleArrow();
-        this.dealer.toggleArrow();
+        this.currentCharacter.disableArrow();
+        this.dealer.enableArrow();
     }
 
     // Checks current game state and resolves it if need be.
     // If the game is resolved (player wins/loses), then transitions to post-game UI.
-    public void delayedCheck(){
+    public void check(){
         StateManager.State state = StateManager.checkState(currentCharacter, dealer,
                 this.splitStatus, this.doubleStatus);
 

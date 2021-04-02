@@ -2,11 +2,7 @@ package com.example.blackjack.deck;
 
 import android.content.Context;
 import android.content.res.Resources;
-import android.view.Gravity;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-
-import com.example.blackjack.game.Game;
 
 public class Card {
 

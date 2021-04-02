@@ -1,6 +1,5 @@
 package com.example.blackjack.players;
 
-import android.content.Context;
 import android.graphics.drawable.GradientDrawable;
 import android.view.Gravity;
 import android.view.View;
@@ -9,7 +8,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.blackjack.deck.Card;
-import com.example.blackjack.game.Game;
 
 import java.util.ArrayList;
 
@@ -124,7 +122,7 @@ public class Character {
         this.arrow.setVisibility(View.VISIBLE);
     }
 
-    public void unableArrow(){
+    public void disableArrow(){
         this.arrow.setVisibility(View.INVISIBLE);
     }
 
@@ -132,11 +130,8 @@ public class Character {
         return this.cards.size();
     }
 
-    public void toggleArrow(){
-        //pass
-    }
-
-    public void setCurrentCharacter(){
+    public void setAsCurrentCharacter(){
+        this.enableArrow();
 
     }
 }
