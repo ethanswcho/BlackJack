@@ -32,19 +32,4 @@ public class Dealer extends Character{
         return this.hittingLimit;
     }
 
-    public void doDealerAnimation(final Deck d){
-        HandlerThread thread = new HandlerThread("HT");
-        thread.start();
-        final Handler handler = new Handler(thread.getLooper());
-        while(this.value < this.hittingLimit){
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run(){
-                    System.out.println("!!!!!!!!!!!!!!!!!!");
-                    deal(d.getACard());
-                }
-            }, 100);
-        }
-    }
-
 }

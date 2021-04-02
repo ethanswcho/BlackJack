@@ -198,6 +198,7 @@ public class Game extends AppCompatActivity {
     public void doHit(){
         this.currentCharacter.deal(this.deck.getACard());
         this.buttonDouble.setEnabled(false);
+        this.buttonSplit.setEnabled(false);
         this.check();
     }
 

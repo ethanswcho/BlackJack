@@ -16,7 +16,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
 
-
     // Starts the game.
     public void start(View view){
         Intent intent = new Intent(this, Game.class);
@@ -24,8 +23,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //TODO!!
-    public void settings(View view){
-        // Adjust settings
+    public void rules(View view){
+        Intent intent = new Intent(this, Rules.class);
+        startActivity(intent);
     }
 
     //TODO!!

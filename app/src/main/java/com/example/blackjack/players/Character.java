@@ -21,7 +21,6 @@ public class Character {
     TextView titleText;
     boolean containsAce = false;
     LinearLayout.LayoutParams lp;
-    GradientDrawable border;
     ImageView arrow;
 
     public Character(LinearLayout ll, TextView tv, ImageView a){
@@ -32,12 +31,6 @@ public class Character {
         this.titleText = tv;
         this.arrow = a;
         this.initializeLayoutParams();
-    }
-
-    private void initializeBorder(){
-        this.border = new GradientDrawable();
-        this.border.setColor(0xFFFFFFFF);
-        this.border.setStroke(4, 0xFFFF4D4D);
     }
 
     // Initialize layout parameters for CardPhotos (which are ImageViews).
@@ -108,16 +101,6 @@ public class Character {
         return this.getValue() > 21;
     }
 
-    // Red border to highlight current player
-    public void addBorder(){
-        this.cardsLayout.setBackground(border);
-    }
-
-    // Remove border from their hand
-    public void removeBorder(){
-        this.cardsLayout.setBackgroundResource(0);
-    }
-
     public void enableArrow(){
         this.arrow.setVisibility(View.VISIBLE);
     }
@@ -130,8 +113,4 @@ public class Character {
         return this.cards.size();
     }
 
-    public void setAsCurrentCharacter(){
-        this.enableArrow();
-
-    }
 }

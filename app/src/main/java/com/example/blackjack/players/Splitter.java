@@ -80,18 +80,4 @@ public class Splitter extends Character {
         this.state = StateManager.State.NONE;
         this.waitingDealer = false;
     }
-
-    /*
-    // Save splitter's status before moving onto the player.
-    // These fields will be accessed again when resolving gamestate at the end.
-    public void updateStatus(boolean doubleStatus, int bet, StateManager.State state){
-        this.doubleStatus = doubleStatus;
-        this.bet = bet;
-        this.state = state;
-        if(this.getValue() > 21){
-            displayBust();
-        }
-    }
-    */
-
 }

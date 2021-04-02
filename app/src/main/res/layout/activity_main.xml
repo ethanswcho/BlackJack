@@ -7,22 +7,22 @@
     tools:context=".MainActivity">
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/button_rules"
         android:layout_width="218dp"
         android:layout_height="92dp"
         android:layout_marginStart="96dp"
         android:layout_marginTop="25dp"
         android:layout_marginEnd="97dp"
         android:hint="@string/button_settings"
-        android:onClick="settings"
-        android:text="@string/button_settings"
-        app:layout_constraintBottom_toTopOf="@+id/button"
+        android:onClick="rules"
+        android:text="rules"
+        app:layout_constraintBottom_toTopOf="@+id/button_about"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button2" />
+        app:layout_constraintTop_toBottomOf="@+id/button_start" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/button_start"
         android:layout_width="218dp"
         android:layout_height="92dp"
         android:layout_marginStart="96dp"
@@ -31,7 +31,7 @@
         android:hint="@string/button_start"
         android:onClick="start"
         android:text="@string/button_start"
-        app:layout_constraintBottom_toTopOf="@+id/button3"
+        app:layout_constraintBottom_toTopOf="@+id/button_rules"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
@@ -49,7 +49,7 @@
         app:srcCompat="@drawable/logo" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/button_about"
         android:layout_width="218dp"
         android:layout_height="92dp"
         android:layout_marginStart="96dp"
@@ -62,5 +62,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button3" />
+        app:layout_constraintTop_toBottomOf="@+id/button_rules" />
 </androidx.constraintlayout.widget.ConstraintLayout>
