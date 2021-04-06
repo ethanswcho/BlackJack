@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
 
     //TODO!!
     public void about(View view){
-        // Show about (link github, about myself etc)
+        Intent intent = new Intent(this, About.class);
+        startActivity(intent);
     }
 }

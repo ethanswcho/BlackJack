@@ -8,11 +8,11 @@ import android.view.View;
 
 import com.example.blackjack.game.Game;
 
-public class Rules extends AppCompatActivity {
+public class About extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_rules);
+        setContentView(R.layout.activity_about);
     }
 }
