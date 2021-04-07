@@ -102,7 +102,10 @@ public class TransitionManager {
         disableButtons(mainGameViews);
         postGameLayout.setVisibility(View.VISIBLE);
         // If player did not split, only one row of hand results should be shown
-        if(splitStatus == false){
+        if(splitStatus == true){
+            splitLayout.setVisibility(View.VISIBLE);
+        }
+        else{
             splitLayout.setVisibility(View.INVISIBLE);
         }
     }
