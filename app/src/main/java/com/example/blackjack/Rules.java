@@ -29,7 +29,7 @@ public class Rules extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rules);
 
-        tabLayout = findViewById(R.id.tab_rules);
+        tabLayout = findViewById(R.id.layout_tabs);
         viewPager = findViewById(R.id.view_pager);
 
         ArrayList<String> arrayList = new ArrayList<>();
@@ -37,10 +37,7 @@ public class Rules extends AppCompatActivity {
         arrayList.add("Rules");
         arrayList.add("Basic Strategy");
 
-        // TabLayout is null, viewPager is not.
-        System.out.println("Tab Layout: " + tabLayout.getId());
         prepareViewPager(viewPager, arrayList);
-       // System.out.println(tabLayout.getId());
         System.out.println(viewPager.getId());
         tabLayout.setupWithViewPager(viewPager);
     }
@@ -49,7 +46,7 @@ public class Rules extends AppCompatActivity {
 
         MainAdapter adapter = new MainAdapter(getSupportFragmentManager());
         MainFragment fragment = new MainFragment();
-
+        /*
         for(int i=0; i<arrayList.size(); i++){
             Bundle bundle = new Bundle();
             bundle.putString("title", arrayList.get(i));
@@ -57,6 +54,12 @@ public class Rules extends AppCompatActivity {
             adapter.addFragment(fragment, arrayList.get(i));
             fragment = new MainFragment();
         }
+         */
+
+        adapter.addFragment(fragment, arrayList.get(0));
+
+        Fragment fragment2 = new fragment_bs();
+        adapter.addFragment(fragment2, arrayList.get(1));
         viewPager.setAdapter(adapter);
     }
 
