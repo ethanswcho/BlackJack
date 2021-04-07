@@ -43,8 +43,7 @@ public class Game extends AppCompatActivity {
     Runnable delayedDeal, delayedCheck;
 
     // enabled for testing split functionality
-    Boolean splitMode = false;
-
+    Boolean splitMode = true;
     // TODO: Customizable odds are below
     int bet = 10;
     int hittingLimit = 17;
@@ -275,6 +274,8 @@ public class Game extends AppCompatActivity {
         this.splitter.displayUI();
         this.splitter.enableArrow();
         this.player.disableArrow();
+        this.player.deal(deck.getACard());
+        this.splitter.deal(deck.getACard());
         this.currentCharacter = this.splitter;
     }
 
