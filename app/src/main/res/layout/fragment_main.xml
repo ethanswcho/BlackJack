@@ -52,7 +52,7 @@
                 android:layout_width="300dp"
                 android:layout_height="60dp"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="40dp"
                 android:gravity="center_horizontal|center_vertical"
                 android:text="Basic Strategy"
                 android:textSize="40sp"
@@ -73,9 +73,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="40dp"
                 android:gravity="center_horizontal|center_vertical"
-                android:text="Application Settings"
+                android:text="Variation"
                 android:textSize="40sp"
                 android:textStyle="bold" />
 
@@ -98,7 +98,7 @@
                     android:id="@+id/textView21"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="20dp"
                     android:gravity="center_horizontal"
                     android:text="Dealer Hit Threshold"
                     android:textSize="30sp"
@@ -108,18 +108,17 @@
                     android:id="@+id/textView22"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
                     android:lineSpacingExtra="8sp"
                     android:paddingLeft="40sp"
                     android:paddingRight="40sp"
-                    android:text="Dealer will hit until its hand value is at least 17. (Dealer will NOT will soft 17)."
+                    android:text="Dealer will hit until its hand value is at least 17. (Dealer will NOT hit soft 17)."
                     android:textSize="20sp" />
 
                 <TextView
                     android:id="@+id/textView19"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="20dp"
                     android:gravity="center_horizontal"
                     android:text="Split"
                     android:textSize="30sp"
@@ -129,7 +128,6 @@
                     android:id="@+id/textView18"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
                     android:lineSpacingExtra="8sp"
                     android:paddingLeft="40sp"
                     android:paddingRight="40sp"
@@ -140,7 +138,7 @@
                     android:id="@+id/textView16"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="20dp"
                     android:gravity="center_horizontal"
                     android:text="BlackJack Payout"
                     android:textSize="30sp"
@@ -150,11 +148,30 @@
                     android:id="@+id/textView26"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
                     android:lineSpacingExtra="8sp"
                     android:paddingLeft="40sp"
                     android:paddingRight="40sp"
-                    android:text="Player BlackJack will yield 150% of the original bet payout."
+                    android:text="Player BlackJack will yield 150% of the original bet as payout."
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:gravity="center_horizontal"
+                    android:text="Hitting Limit"
+                    android:textSize="30sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/textView15"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:lineSpacingExtra="8sp"
+                    android:paddingLeft="40sp"
+                    android:paddingRight="40sp"
+                    android:text="Some variations restrict how many hits each hand is allowed to do. There are NO hitting limit in this application."
                     android:textSize="20sp" />
 
                 <TextView
