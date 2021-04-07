@@ -42,6 +42,9 @@ public class Game extends AppCompatActivity {
     Handler handler;
     Runnable delayedDeal, delayedCheck;
 
+    // enabled for testing split functionality
+    Boolean splitMode = true;
+
     // TODO: Customizable odds are below
     int bet = 10;
     int hittingLimit = 17;
@@ -122,12 +125,14 @@ public class Game extends AppCompatActivity {
         this.delayedDeal = new Runnable() {
             @Override
             public void run() {
-                dealer.deal(deck.getACard());
+                if (dealer.getValue() < dealer.getHittingLimit()) {
+                    dealer.deal(deck.getACard());
+                }
                 // Until dealer's value exceeds hitting limit, keep hitting.
                 if (dealer.getValue() < dealer.getHittingLimit()) {
                     handler.postDelayed(this, 1000);
                 }
-                else{
+                else {
                     handler.postDelayed(delayedCheck, 1000);
                 }
             }
@@ -184,13 +189,28 @@ public class Game extends AppCompatActivity {
 
     // Does the initial dealing. 2 cards to player and 1 to dealer. Checks if player got BJ after.
     private void initialDealing(){
-        this.player.deal(this.deck.getACard());
-        this.dealer.deal(this.deck.getACard());
-        this.player.deal(this.deck.getACard());
-        if(this.player.canSplit() == true){
-            this.buttonSplit.setEnabled(true);
+
+        // If splitMode is enabled, always deal cards that can be split.
+        if(splitMode){
+            ArrayList<Card> splitCards = this.deck.getSplitCards();
+            this.player.deal(splitCards.get(0));
+            this.dealer.deal(this.deck.getACard());
+            this.player.deal(splitCards.get(1));
+            if (this.player.canSplit() == true) {
+                this.buttonSplit.setEnabled(true);
+            }
+            this.check();
         }
-        this.check();
+
+        else {
+            this.player.deal(this.deck.getACard());
+            this.dealer.deal(this.deck.getACard());
+            this.player.deal(this.deck.getACard());
+            if (this.player.canSplit() == true) {
+                this.buttonSplit.setEnabled(true);
+            }
+            this.check();
+        }
     }
 
     // current character gets one card. (Linked to HIT button)
@@ -207,7 +227,7 @@ public class Game extends AppCompatActivity {
         //If a player passed after doing split, then we save current state into Splitter, then
         // move onto the players hand.
         if(this.currentCharacter.getClass() == Splitter.class){
-            splitTransition();
+            splitTransition(StateManager.State.NONE);
         }
         // Regular (non-split) pass. Dealer will hit until its hands value is past the hitting limit.
         // Will display a new card every 1 second for animation effect.
@@ -236,7 +256,7 @@ public class Game extends AppCompatActivity {
         if(this.currentCharacter.isBusted()){
             // If this is a split hand that busted, then we need to move onto the main hand
             if(this.splitStatus == true && this.currentCharacter.getClass() == Splitter.class){
-                this.splitTransition();
+                this.splitTransition(StateManager.State.LOSS);
             }
             // If player hand busted, then end the game here after 1s, so player can see their bust
             else{
@@ -260,9 +280,9 @@ public class Game extends AppCompatActivity {
 
     // Saves current splitter's state, then move onto the players hand.
     // Also disables buttonSplit since only one split is allowed per hand.
-    private void splitTransition(){
+    private void splitTransition(StateManager.State state){
         this.buttonSplit.setEnabled(false);
-        this.splitter.setState(StateManager.State.NONE);
+        this.splitter.setState(state);
         this.splitter.setDoubleStatus(this.doubleStatus);
         this.doubleStatus = false;
         this.splitter.disableArrow();
@@ -277,7 +297,7 @@ public class Game extends AppCompatActivity {
     }
 
     // Checks current game state and resolves it if need be.
-    // If the game is resolved (player wins/loses), then transitions to post-game UI.
+
     public void check(){
         StateManager.State state = StateManager.checkState(currentCharacter, dealer,
                 this.splitStatus, this.doubleStatus);
@@ -286,47 +306,53 @@ public class Game extends AppCompatActivity {
             // If the current state is for splitter, save current state of splitter to be used later
             // and move onto player
             if (currentCharacter.getClass() == Splitter.class) {
-                splitTransition();
+                splitTransition(state);
             }
             // Update state for player, then resolve current state, then perform postGameTransition
             else {
                 // If split happened and the split hand is waiting dealer
                 // e.g. split hand didn't bust, but player hand did. Then the game shouldn't end there,
                 // we need the dealer to get his cards so we can evaluate the split hand.
-                if (this.splitter.isWaitingDealer()){
+                if (this.splitter.isWaitingDealer()) {
                     this.splitter.setWaitingDealer(false);
                     this.doPass();
-                }
-                ArrayList<StateManager.State> states = new ArrayList<>();
-                states.add(state);
-                if(this.splitStatus == true){
-                    // It's possible that the state was not saved initially for splitter because it depended on dealer's hand.
-                    // If that is the case, we will re-check the state since dealer has been dealt its cards
-                    if(this.splitter.getState() == StateManager.State.NONE){
-                        this.splitter.setState(StateManager.checkState(this.splitter, dealer,
-                                this.splitStatus, this.splitter.getDoubleStatus()));
-                    }
-                    states.add(this.splitter.getState());
-                }
-                StateManager.resolveStates(states, player, bet, blackJackMultiplier);
-                TransitionManager.preparePostGameLayout(statusLayout1, statusLayout2,
-                        textTotalMoney, textBetAmount, bet, player.getMoney(), blackJackMultiplier, states);
-
-                // If it is 2-card BJ or player just hit a card that is about to make them bust
-                // Let them have 1 second to view their field instead of moving immediately to post game transition
-                if(state == StateManager.State.BLACKJACK || this.dealer.getNumCards() == 1){
-                    Runnable delayedTransition = new Runnable(){
-                        @Override
-                        public void run(){
-                            TransitionManager.postGameTransition(mainGameViews, postGameLayout, splitStatus, statusLayout1);
-                        }
-                    };
-                    handler.postDelayed(delayedTransition, 1000);
-                }
-                else {
-                    TransitionManager.postGameTransition(mainGameViews, postGameLayout, this.splitStatus, statusLayout1);
+                } else {
+                    this.resolveState(state);
                 }
             }
+        }
+    }
+
+    // If the game is resolved (player wins/loses), then transitions to post-game UI.
+    public void resolveState(StateManager.State state){
+        ArrayList<StateManager.State> states = new ArrayList<>();
+        states.add(state);
+        if(this.splitStatus == true){
+            // It's possible that the state was not saved initially for splitter because it depended on dealer's hand.
+            // If that is the case, we will re-check the state since dealer has been dealt its cards
+            if(this.splitter.getState() == StateManager.State.NONE){
+                this.splitter.setState(StateManager.checkState(this.splitter, dealer,
+                        this.splitStatus, this.splitter.getDoubleStatus()));
+            }
+            states.add(this.splitter.getState());
+        }
+        StateManager.resolveStates(states, player, bet, blackJackMultiplier);
+        TransitionManager.preparePostGameLayout(statusLayout1, statusLayout2,
+                textTotalMoney, textBetAmount, bet, player.getMoney(), blackJackMultiplier, states);
+
+        // If it is 2-card BJ or player just hit a card that is about to make them bust
+        // Let them have 1 second to view their field instead of moving immediately to post game transition
+        if(state == StateManager.State.BLACKJACK || this.dealer.getNumCards() == 1){
+            Runnable delayedTransition = new Runnable(){
+                @Override
+                public void run(){
+                    TransitionManager.postGameTransition(mainGameViews, postGameLayout, splitStatus, statusLayout1);
+                }
+            };
+            handler.postDelayed(delayedTransition, 1000);
+        }
+        else {
+            TransitionManager.postGameTransition(mainGameViews, postGameLayout, this.splitStatus, statusLayout1);
         }
     }
 }

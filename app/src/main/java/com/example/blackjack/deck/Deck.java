@@ -40,6 +40,24 @@ public class Deck {
         return cards.get(cardPointer);
     }
 
+    // Get a pair of cards who are guaranteed to be splittable (has same value), and removes them from the deck.
+    public ArrayList<Card> getSplitCards(){
+        ArrayList<Card> splitCards = new ArrayList<Card>();
+        cardPointer ++;
+        int firstVal = cards.get(cardPointer).getValue();
+        splitCards.add(cards.get(cardPointer));
+
+        for(int i=1; i<cards.size(); i++){
+            if(cards.get(i).getValue() == firstVal){
+                splitCards.add(cards.get(i));
+                cards.remove(i);
+                break;
+            }
+        }
+        cards.remove(0);
+        return splitCards;
+    }
+
     //Test method. Prints out the contents of current deck.
     public void iterateDeck(){
         for(Card c: cards){
