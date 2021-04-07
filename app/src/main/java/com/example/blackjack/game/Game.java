@@ -43,7 +43,7 @@ public class Game extends AppCompatActivity {
     Runnable delayedDeal, delayedCheck;
 
     // enabled for testing split functionality
-    Boolean splitMode = true;
+    Boolean splitMode = false;
     // TODO: Customizable odds are below
     int bet = 10;
     int hittingLimit = 17;
