@@ -4,7 +4,7 @@ BlackJack is an android application written in Java for playing BlackJack on the
 
 ## Installation
 
-Go to Releases and download the latest release's apk. (Version 1.0 as of 2021-April-06)  
+Go to Releases and download the latest release's apk. (Version 1.1 as of 2021-April-06)  
 Either use an emulator to open the apk or copy the apk to your Android device and install it.
 
 ## Credits
