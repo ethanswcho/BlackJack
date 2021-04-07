@@ -269,6 +269,7 @@ public class Game extends AppCompatActivity {
     //Player splits. (Linked to SPLIT button)
     public void doSplit(){
         this.splitStatus = true;
+        this.buttonSplit.setEnabled(false);
         Card splitCard = this.player.popCard();
         this.splitter.deal(splitCard);
         this.splitter.displayUI();
